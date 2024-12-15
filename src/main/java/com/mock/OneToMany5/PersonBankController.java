@@ -16,23 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/person")
-public class PersonController {
+@RequestMapping("/p_b")
+public class PersonBankController {
 
 	@Autowired
-	PersonRepo repo;
+	PersonBankRepo repo;
 	
 	@GetMapping
-	public List<Person> getAll() {
+	public List<Person_Bank> getAll() {
 		return repo.findAll();	}
 	
 	@GetMapping("/{id}")
-	public Person getById(@PathVariable int id) {
+	public Person_Bank getById(@PathVariable int id) {
 		return repo.findById(id).orElseThrow();
 		}
 	
 	@PostMapping
-	public Person add(@RequestBody Person person) {
+	public Person_Bank add(@RequestBody Person_Bank person) {
+		
 		
 		 return repo.save(person);	}
 	
@@ -42,18 +43,16 @@ public class PersonController {
 	
 
 	@PutMapping("/{id}")
-	public Person update(@PathVariable int id,@RequestBody Person person) {
-		Person p = repo.findById(id).orElseThrow();
+	public Person_Bank update(@PathVariable int id,@RequestBody Person_Bank person) {
+		Person_Bank p = repo.findById(id).orElseThrow();
 		
-		p.setDob(person.getDob());
-		p.setFirst(person.getFirst());
-		p.setLast(person.getLast());
+		p.setAccountType(person.getAccountType());
 		
 		
 		 return repo.save(p);
 		}
 	@GetMapping("/{pNo}/{pSize}")
-	public Page<Person> getById(@PathVariable int pNo,@PathVariable int pSize) {
+	public Page<Person_Bank> getById(@PathVariable int pNo,@PathVariable int pSize) {
 		PageRequest of = PageRequest.of(pNo, pSize);
 		return repo.findAll(of);
 		}
